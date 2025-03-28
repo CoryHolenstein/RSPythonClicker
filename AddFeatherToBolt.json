@@ -1,0 +1,13 @@
+{
+    "slot_a": 
+    { "x": 683, "y": 384 },
+    "slot_b": 
+    { "x": 639, "y": 386 },
+    "click_delay": 0.05,
+    "runelite": {
+      "window_title": "RuneLite - The Hemporer",
+      "position": { "x": 100, "y": 100 },
+      "size": { "width": 800, "height": 600 }
+    }
+  }
+  
