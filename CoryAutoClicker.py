@@ -34,6 +34,9 @@ running = False
 burst_slots = other_slots[:5]
 steady_slots = other_slots[5:]
 
+# Mouse lock to prevent interference
+mouse_lock = threading.Lock()
+
 def set_runelite_window():
     global runelite_offset
     title_prefix = config['runelite']['window_title']
@@ -59,14 +62,15 @@ def set_runelite_window():
 
 def click_slot(slot):
     global runelite_offset
-    jitter_x = random.randint(-2, 2)
-    jitter_y = random.randint(-2, 2)
-    x = runelite_offset['x'] + slot['x'] + jitter_x
-    y = runelite_offset['y'] + slot['y'] + jitter_y
-    pyautogui.moveTo(x, y, duration=0.1)
-    pyautogui.mouseDown()
-    time.sleep(0.05)
-    pyautogui.mouseUp()
+    with mouse_lock:
+        jitter_x = random.randint(-2, 2)
+        jitter_y = random.randint(-2, 2)
+        x = runelite_offset['x'] + slot['x'] + jitter_x
+        y = runelite_offset['y'] + slot['y'] + jitter_y
+        pyautogui.moveTo(x, y, duration=0.1)
+        pyautogui.mouseDown()
+        time.sleep(0.05)
+        pyautogui.mouseUp()
     sleep_time = click_delay + random.uniform(-0.02, 0.1)
     time.sleep(max(0.05, sleep_time))
 
@@ -143,7 +147,9 @@ def random_mouse_jitter():
 
         rand_x = random.randint(left, left + width)
         rand_y = random.randint(top, top + height)
-        pyautogui.moveTo(rand_x, rand_y, duration=random.uniform(0.3, 0.7))
+
+        with mouse_lock:
+            pyautogui.moveTo(rand_x, rand_y, duration=random.uniform(0.3, 0.7))
         print(f"Moved mouse randomly to ({rand_x}, {rand_y})")
 
 def main():

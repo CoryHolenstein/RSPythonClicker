@@ -67,7 +67,7 @@ def click_slot(slot):
     pyautogui.mouseDown()
     time.sleep(0.05)
     pyautogui.mouseUp()
-    sleep_time = click_delay + random.uniform(-0.05, 0.1)
+    sleep_time = click_delay + random.uniform(-0.02, 0.1)
     time.sleep(max(0.05, sleep_time))
 
 def click_first_slots():
