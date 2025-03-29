@@ -42,8 +42,8 @@
     "first_slots_interval": 300,
     "other_slots_interval": 75,
     "clicks_per_slot": 4,
-    "between_clicks": 0.7,
-    "between_slots": 1.0
+    "between_clicks": 0.9,
+    "between_slots": 1.2
   },
   "max_runtime_minutes": 165,
   "mouse_jitter": {
