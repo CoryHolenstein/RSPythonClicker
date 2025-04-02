@@ -21,7 +21,7 @@ import pygetwindow as gw
 running = False
 runelite_offset = {'x': 0, 'y': 0}
 config_file = "herblore_config.json"
-MAX_RUNTIME = 4 * 60 * 60  # 4 hours
+MAX_RUNTIME = 6 * 60 * 60  # 6 hours
 
 # Load config
 with open(config_file) as f:
@@ -89,8 +89,8 @@ def auto_clicker():
 
             # Fidget mouse slightly
             try:
-                offset_x = random.randint(-500, 500)
-                offset_y = random.randint(-200, 150)
+                offset_x = random.randint(-115, 125)
+                offset_y = random.randint(-100, 153)
                 current_x, current_y = pyautogui.position()
                 pyautogui.moveTo(current_x + offset_x, current_y + offset_y, duration=0.1)
             except Exception as e:
