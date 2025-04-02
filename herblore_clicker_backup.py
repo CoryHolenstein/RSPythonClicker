@@ -138,7 +138,7 @@ def main():
 
         if keyboard.is_pressed('m'):
             show_mouse_position()
-            print("\nBack to main menu. Press 's' to start, 'q' to quit, 'm' for mouse coordinates.")
+            print("\nBack to main menu. Press 'e' to start, 'q' to quit, 'm' for mouse coordinates.")
 
         time.sleep(0.1)
 

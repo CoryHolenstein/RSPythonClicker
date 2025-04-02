@@ -76,12 +76,12 @@ def auto_clicker():
         # Step 1: First two clicks
         click_with_jitter(**clicks[0])
         click_with_jitter(**clicks[1])
-        time.sleep(random.uniform(1, 3))  # Wait after 2nd click
+        time.sleep(random.uniform(1, 2))  # Wait after 2nd click
 
         # Step 2: Start herblore click
         click_with_jitter(**clicks[2])
         # Wait 20–30 seconds with gentle mouse fidgeting
-        wait_time = random.uniform(20, 30)
+        wait_time = random.uniform(19, 22)
         start_fidget = time.time()
         while time.time() - start_fidget < wait_time:
             sleep_time = random.uniform(1.0, 2.5)
@@ -98,7 +98,7 @@ def auto_clicker():
 
         # Step 3: Bank click
         click_with_jitter(**clicks[3])
-        time.sleep(random.uniform(3, 4))
+        time.sleep(random.uniform(2, 3))
         # Step 4: New click after opening bank
         click_with_jitter(**clicks[4])
         time.sleep(random.uniform(2, 3))  # Fixed 2s delay after new bank click
@@ -152,7 +152,7 @@ def main():
 
         if keyboard.is_pressed('m'):
             show_mouse_position()
-            print("\nBack to main menu. Press 's' to start, 'q' to quit, 'm' for mouse coordinates.")
+            print("\nBack to main menu. Press 'e' to start, 'q' to quit, 'm' for mouse coordinates.")
 
         time.sleep(0.1)
 
