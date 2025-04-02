@@ -122,10 +122,10 @@ def show_mouse_position():
 def main():
     global running
     set_runelite_window()
-    print("Press 's' to start, 'q' to quit, 'm' for mouse coordinates.")
+    print("Press 'e' to start, 'q' to quit, 'm' for mouse coordinates.")
 
     while True:
-        if keyboard.is_pressed('s') and not running:
+        if keyboard.is_pressed('e') and not running:
             print("Starting auto-clicker...")
             running = True
             threading.Thread(target=auto_clicker, daemon=True).start()

@@ -155,13 +155,13 @@ def random_mouse_jitter():
 def main():
     global running
     set_runelite_window()
-    print("Press 's' to start, 'q' to quit.")
+    print("Press 'e' to start, 'q' to quit.")
 
     start_time = None
     max_runtime = config.get("max_runtime_minutes", 165) * 60
 
     while True:
-        if keyboard.is_pressed('s') and not running:
+        if keyboard.is_pressed('e') and not running:
             print("Starting autoclicker...")
             running = True
             start_time = time.time()

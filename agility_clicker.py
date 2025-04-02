@@ -148,7 +148,7 @@ def main():
     print("Press 's' to start script, 'q' to quit, 'm' to get mouse positions.")
 
     while True:
-        if keyboard.is_pressed('s') and not running:
+        if keyboard.is_pressed('e') and not running:
             print("Starting agility auto-clicker...")
             running = True
             click_initial_course_point()

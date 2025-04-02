@@ -56,12 +56,12 @@ def click_slot(slot):
 
 def main():
     set_runelite_window()
-    print("Press 's' to start, 'q' to quit.")
+    print("Press 'e' to start, 'q' to quit.")
 
     running = False
 
     while True:
-        if keyboard.is_pressed('s') and not running:
+        if keyboard.is_pressed('e') and not running:
             print("Starting fast A-B-B-A clicks...")
             running = True
             time.sleep(0.5)

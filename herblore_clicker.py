@@ -80,7 +80,21 @@ def auto_clicker():
 
         # Step 2: Start herblore click
         click_with_jitter(**clicks[2])
-        time.sleep(random.uniform(20, 30))  # Wait after 3rd click
+        # Wait 20–30 seconds with gentle mouse fidgeting
+        wait_time = random.uniform(20, 30)
+        start_fidget = time.time()
+        while time.time() - start_fidget < wait_time:
+            sleep_time = random.uniform(1.0, 2.5)
+            time.sleep(sleep_time)
+
+            # Fidget mouse slightly
+            try:
+                offset_x = random.randint(-500, 500)
+                offset_y = random.randint(-200, 150)
+                current_x, current_y = pyautogui.position()
+                pyautogui.moveTo(current_x + offset_x, current_y + offset_y, duration=0.1)
+            except Exception as e:
+                print(f"Mouse move error: {e}")
 
         # Step 3: Bank click
         click_with_jitter(**clicks[3])
@@ -122,10 +136,10 @@ def show_mouse_position():
 def main():
     global running
     set_runelite_window()
-    print("Press 's' to start, 'q' to quit, 'm' for mouse coordinates.")
+    print("Press 'e' to start, 'q' to quit, 'm' for mouse coordinates.")
 
     while True:
-        if keyboard.is_pressed('s') and not running:
+        if keyboard.is_pressed('e') and not running:
             print("Starting auto-clicker...")
             running = True
             threading.Thread(target=auto_clicker, daemon=True).start()
