@@ -139,12 +139,12 @@ def auto_clicker():
         # Step 4: click blast furnace
         print("Step 4: Clicking blast furnace")
         click_with_jitter(**clicks[4])
-        time.sleep(random.uniform(15, 18))
+        time.sleep(random.uniform(12, 15))
 
         # Step 5: click walk to collection area
         print("Step 5: Walking to collection area")
         click_with_jitter(**clicks[5])
-        time.sleep(random.uniform(10, 15))
+        time.sleep(random.uniform(6, 8))
 
         # Step 6: equip ice gloves
         print("Step 6: Equipping ice gloves")
@@ -169,7 +169,7 @@ def auto_clicker():
         # Step 10: walk to bank
         print("Step 10: Walking to bank")
         click_exact(**clicks[10])
-        time.sleep(random.uniform(5, 10))
+        time.sleep(random.uniform(8, 12))
 
 
 
