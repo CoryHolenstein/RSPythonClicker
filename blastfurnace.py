@@ -21,7 +21,7 @@ import pygetwindow as gw
 running = False
 runelite_offset = {'x': 0, 'y': 0}
 client_size = {'width': 765, 'height': 503}
-config_file = "herblore_config.json"
+config_file = "blastfurnace_config.json"
 MAX_RUNTIME = 5 * 60 * 60  # 5 hours
 
 # Load config
@@ -66,6 +66,13 @@ def click_with_jitter(x, y):
     pyautogui.click()
     print(f"Clicked at ({final_x}, {final_y}) with jitter.")
 
+def click_exact(x, y):
+    final_x = runelite_offset['x'] + x
+    final_y = runelite_offset['y'] + y
+    pyautogui.moveTo(final_x, final_y, duration=0.1)
+    pyautogui.click()
+    print(f"Clicked exactly at ({final_x}, {final_y})")
+
 def fidget_mouse_in_client(wait_time):
     start_fidget = time.time()
 
@@ -105,40 +112,67 @@ def auto_clicker():
 
     while running:
         if time.time() - start_time >= MAX_RUNTIME:
-            print("6 hours reached. Stopping script.")
+            print("time limit reached. Stopping script.")
             running = False
             break
 
-        # Step 1: First two clicks
+        # Step 0: bank click
+        print("Step 0: Clicking bank")
         click_with_jitter(**clicks[0])
+        time.sleep(random.uniform(1, 2))
+
+        # Step 1: deposit bars
+        print("Step 1: Depositing bars")
         click_with_jitter(**clicks[1])
         time.sleep(random.uniform(1, 2))
 
-        # Step 2: Start herblore click
+        # Step 2: grab gold ore
+        print("Step 2: Grabbing gold ore")
         click_with_jitter(**clicks[2])
-
-        # Step 2.5: Fidget during herblore
-        wait_time = random.uniform(19, 22)
-        fidget_mouse_in_client(wait_time)
-
-        # Step 3: Bank click
-        click_with_jitter(**clicks[3])
-        time.sleep(random.uniform(2, 3))
-
-        # Step 4: New click after opening bank
-        click_with_jitter(**clicks[4])
-        time.sleep(random.uniform(2, 3))
-
-        # Step 5: Withdraw Potions
-        click_with_jitter(**clicks[5])
         time.sleep(random.uniform(1, 2))
 
-        # Step 6: Withdraw Secondary Item
+        # Step 3: close bank
+        print("Step 3: Closing bank")
+        click_with_jitter(**clicks[3])
+        time.sleep(random.uniform(1, 2))
+
+        # Step 4: click blast furnace
+        print("Step 4: Clicking blast furnace")
+        click_with_jitter(**clicks[4])
+        time.sleep(random.uniform(15, 18))
+
+        # Step 5: click walk to collection area
+        print("Step 5: Walking to collection area")
+        click_with_jitter(**clicks[5])
+        time.sleep(random.uniform(10, 15))
+
+        # Step 6: equip ice gloves
+        print("Step 6: Equipping ice gloves")
         click_with_jitter(**clicks[6])
         time.sleep(random.uniform(1, 2))
 
-        # Step 7: Close bank
+        # Step 7: collect bars
+        print("Step 7: Collecting bars")
         click_with_jitter(**clicks[7])
+        time.sleep(random.uniform(2, 3))
+
+        # Step 8: collect bars from chat
+        print("Step 8: Collecting bars from chat")
+        click_with_jitter(**clicks[8])
+        time.sleep(random.uniform(2, 3))
+
+        # Step 9: equip gold goldsmith gauntlets
+        print("Step 9: Equipping goldsmith gauntlets")
+        click_with_jitter(**clicks[9])
+        time.sleep(random.uniform(1, 2))
+
+        # Step 10: walk to bank
+        print("Step 10: Walking to bank")
+        click_exact(**clicks[10])
+        time.sleep(random.uniform(5, 10))
+
+
+
 
         print("Cycle complete. Restarting...\n")
 
