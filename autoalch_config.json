@@ -1,0 +1,12 @@
+{
+  "runelite": {
+    "window_title": "RuneLite - ",
+    "position": { "x": 100, "y": 100 },
+    "size": { "width": 765, "height": 503 }
+  },
+  "jitter": 3,
+  "clicks": [
+    {"x": 592, "y": 260}
+
+  ]
+}

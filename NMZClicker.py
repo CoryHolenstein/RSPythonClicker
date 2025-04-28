@@ -20,7 +20,7 @@ import pygetwindow as gw
 import random
 
 # Load config
-with open('config.json') as f:
+with open('NMZClicker_config.json') as f:
     config = json.load(f)
 
 first_slots = config['first_slots']
