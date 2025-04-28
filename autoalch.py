@@ -21,7 +21,7 @@ import pygetwindow as gw
 running = False
 runelite_offset = {'x': 0, 'y': 0}
 client_size = {'width': 765, 'height': 503}
-config_file = "diamondcutter_config.json"
+config_file = "autoalch_config.json"
 MAX_RUNTIME = 18 * 60 * 60  # 5 hours
 
 # Load config
