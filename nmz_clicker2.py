@@ -43,6 +43,9 @@ absorption_slots = config.get("absorption_slots", [])
 mouse_jitter_conf = config.get("mouse_jitter", {})
 keyboard_activity_conf = config.get("keyboard_activity", {})
 
+# Absorption tracking
+absorption_state = [{"slot": slot, "sips_left": 4} for slot in absorption_slots]
+
 def set_runelite_window():
     global runelite_offset, client_size
     rl_conf = config.get('runelite', {})
@@ -77,11 +80,22 @@ def click_with_jitter(x, y):
     pyautogui.moveTo(final_x, final_y, duration=random.uniform(0.05, 0.15))
     pyautogui.click()
 
-def click_multiple(pos_list, count, delay=0.2):
-    for _ in range(count):
-        slot = random.choice(pos_list)
-        click_with_jitter(**slot)
-        time.sleep(delay)
+def sip_absorption_potions(sips_needed):
+    sips_done = 0
+    i = 0
+    while sips_done < sips_needed and any(p["sips_left"] > 0 for p in absorption_state):
+        potion = absorption_state[i % len(absorption_state)]
+        if potion["sips_left"] > 0:
+            click_with_jitter(**potion["slot"])
+            potion["sips_left"] -= 1
+            sips_done += 1
+            time.sleep(0.2)
+        i += 1
+
+    if sips_done < sips_needed:
+        print(f"[WARN] Only sipped {sips_done}/{sips_needed} absorptions (all used). Resetting.")
+        for p in absorption_state:
+            p["sips_left"] = 4
 
 def fidget_mouse_thread():
     while running and mouse_jitter_conf.get("enabled", False):
@@ -109,7 +123,6 @@ def random_keyboard_thread():
 
         time.sleep(random.uniform(*interval_range))
 
-        # Simulate right arrow key to rotate camera
         duration = random.uniform(*duration_range)
         print(f"Rotating camera for {duration:.2f} seconds")
         keyboard.press("right")
@@ -129,7 +142,7 @@ def nmz_clicker():
     # Step 1: First Overload
     click_with_jitter(**random.choice(overload_slots))
     last_overload = time.time()
-
+    time.sleep(3)
     # Step 2: Rock cake spam
     for _ in range(rock_cake_clicks):
         click_with_jitter(**clicks["rock_cake"])
@@ -137,35 +150,37 @@ def nmz_clicker():
     last_rock_cake = time.time()
 
     # Step 3: Absorption sips
-    click_multiple(absorption_slots, absorption_sips, delay=0.2)
+    sip_absorption_potions(absorption_sips)
     last_absorption = time.time()
 
-    # Start support threads
+    # Support threads
     if mouse_jitter_conf.get("enabled", False):
         threading.Thread(target=fidget_mouse_thread, daemon=True).start()
     if keyboard_activity_conf:
         threading.Thread(target=random_keyboard_thread, daemon=True).start()
 
-    # Main loop
     while running:
         now = time.time()
         if now - start_time >= MAX_RUNTIME:
             print("Max runtime reached. Exiting.")
             break
 
+        # Always prioritize overload BEFORE rock cake to prevent HP lockout
         if now - last_overload >= overload_interval:
-            print("Drinking overload...")
+            print("Overload expired. Drinking before rock cake...")
             click_with_jitter(**random.choice(overload_slots))
             last_overload = now
+            time.sleep(10)  # Give time for overload to apply and raise HP
 
-        if now - last_rock_cake >= rock_cake_interval:
+        elif now - last_rock_cake >= rock_cake_interval:
             print("Clicking rock cake...")
             click_with_jitter(**clicks["rock_cake"])
             last_rock_cake = now
 
+
         if now - last_absorption >= absorption_interval:
-            print("Drinking absorption...")
-            click_with_jitter(**random.choice(absorption_slots))
+            print(f"Drinking absorption ({absorption_sips} sips)...")
+            sip_absorption_potions(absorption_sips)
             last_absorption = now
 
         time.sleep(0.5)

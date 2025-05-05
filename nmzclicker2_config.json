@@ -5,11 +5,11 @@
       "size": { "width": 800, "height": 600 }
     },
     "jitter": 3,
-    "rock_cake_clicks": 27,
+    "rock_cake_clicks": 30,
     "absorption_sips": 20,
     "rock_cake_interval": 20,
-    "absorption_interval": 70,
-    "overload_interval": 305,
+    "absorption_interval": 50,
+    "overload_interval": 300,
   
 
     "clicks": {
